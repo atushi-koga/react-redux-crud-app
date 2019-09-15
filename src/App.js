@@ -1,11 +1,19 @@
 import React from 'react';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <h1>Hello, world</h1>
-    </div>
+      <div>
+        <Cat/>
+        <Cat/>
+        <Cat/>
+      </div>
+  )
+};
+
+const Cat = () => {
+  return (
+      <div>Meow!</div>
   );
-}
+};
 
 export default App;

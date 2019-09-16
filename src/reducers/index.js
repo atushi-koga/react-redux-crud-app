@@ -1,6 +1,6 @@
 // 全Reducerを1つに結合する
 
 import {combineReducers} from "redux";
-import count from './count';
+import events from './events';
 
-export default combineReducers({count});
+export default combineReducers({events});

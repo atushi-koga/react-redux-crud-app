@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redux basic example</title>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+</head>
+<body>
+<div>
+    <p>
+        Clicked: <span id="value">0</span> times
+        <button id="increment">+</button>
+        <button id="decrement">-</button>
+        <button id="incrementIfOdd">Increment if odd</button>
+        <button id="incrementAsync">Increment async</button>
+    </p>
+</div>
+<script>
+    // Action
+    // 何をするアクションなのかを表すオブジェクト。typeプロパティを必ず持つ
+    const INCREMENT = { type: 'INCREMENT' };
+    const DECREMENT = { type: 'DECREMENT' };
+
+    // Action Creators
+    // Actionを作成するメソッド
+    function increment() {
+        return INCREMENT;
+    }
+    function decrement() {
+        return DECREMENT;
+    }
+
+    // Reducers
+    // ActionとStateから新たなStateを作成し、返す
+    function counter(state, action) {
+        if (typeof state === 'undefined') {
+            return 0
+        }
+
+        switch (action.type) {
+            case 'INCREMENT':
+                return state + 1;
+            case 'DECREMENT':
+                return state - 1;
+            default:
+                return state
+        }
+    }
+
+    // store
+    // アプリ内で必ず1つ存在
+    // アプリの状態を管理する
+    // stateを更新するためのdispatchを提供する
+    // stateの状態を監視するsubscribeを提供する
+    var store = Redux.createStore(counter);
+    var valueEl = document.getElementById('value');
+
+    // listener
+    // stateの変更を結果として描画に反映する
+    function render() {
+        valueEl.innerHTML = store.getState().toString()
+    }
+
+    render();
+    store.subscribe(render);
+
+    // dispatch
+    // storeにstateの変更を知らせる
+    document.getElementById('increment')
+            .addEventListener('click', function () {
+                store.dispatch(increment())
+            });
+
+    document.getElementById('decrement')
+            .addEventListener('click', function () {
+                store.dispatch(decrement())
+            });
+
+    document.getElementById('incrementIfOdd')
+            .addEventListener('click', function () {
+                if (store.getState() % 2 !== 0) {
+                    store.dispatch(increment())
+                }
+            });
+
+    document.getElementById('incrementAsync')
+            .addEventListener('click', function () {
+                setTimeout(function () {
+                    store.dispatch(increment())
+                }, 1000)
+            })
+</script>
+</body>
+</html>

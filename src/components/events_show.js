@@ -64,13 +64,6 @@ class EventsShow extends Component {
     }
 }
 
-const mapDispatchToProps = ({deleteEvent, getEvent, putEvent});
-const mapStateToProps = (state, ownProps) => {
-    const event = state.events[ownProps.match.params.id];
-
-    return {initialValue: event, state};
-};
-
 const validate = values => {
     const errors = {};
 
@@ -79,6 +72,14 @@ const validate = values => {
 
     return errors;
 };
+
+const mapStateToProps = (state, ownProps) => {
+    const event = state.events[ownProps.match.params.id];
+
+    return {initialValues: event, state};
+};
+const mapDispatchToProps = {deleteEvent, getEvent, putEvent};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(
     reduxForm({validate, form: 'eventShowForm', enableReinitialize: true})(EventsShow)
